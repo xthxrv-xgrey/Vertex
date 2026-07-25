@@ -77,23 +77,19 @@ const Dashboard = () => {
                     </Link>
                 </div>
 
-                <div className="space-y-4">
-                    {currentUserVisitedApisData.map((api) => {
-                        return <RecentActivityCard key={api.id} apiData={api} />;
-                    })}
-                </div>
+                {currentUserVisitedApisData?.length > 0 ? (
+                    <div className="space-y-4">
+                        {currentUserVisitedApisData.map((api) => (
+                            <RecentActivityCard key={api.id} apiData={api} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="rounded-xl border border-dashed border-border py-12 text-center">
+                        <h3 className="font-medium">No recent activity</h3>
 
-                {/* Empty State */}
-
-                {/* <div className="rounded-xl border border-dashed border-border py-12 text-center">
-                    <h3 className="font-medium">
-                        No recent activity
-                    </h3>
-
-                    <p className="mt-2 text-sm text-muted-foreground">
-                        Create your first API to get started.
-                    </p>
-                </div> */}
+                        <p className="mt-2 text-sm text-muted-foreground">Create your first API to get started.</p>
+                    </div>
+                )}
             </section>
         </section>
     );
