@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
-import RecentActivityCard from "../components/card/recentActivityCard.jsx";
+import RecentActivityCard from "../components/card/RecentActivityCard.jsx";
+
 import { useUser } from "../features/auth/useUser.js";
 
 const Dashboard = () => {
