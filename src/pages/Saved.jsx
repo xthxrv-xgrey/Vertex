@@ -4,6 +4,7 @@ import { useApis } from "../features/api/useApi.js";
 
 const Saved = () => {
     const { currentUserSavedApisData } = useApis();
+    console.log("hello", currentUserSavedApisData);
 
     return (
         <section className="flex flex-col gap-12 py-10">
@@ -17,13 +18,22 @@ const Saved = () => {
                     </p>
                 </div>
             </section>
+            {/* Show APIs */}
+            {currentUserSavedApisData.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    {currentUserSavedApisData.map((api) => (
+                        <SavedApiCard apiData={api} key={api} />
+                    ))}
+                </div>
+            ) : (
+                <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
+                    <h3 className="text-xl font-semibold">No saved APIs yet</h3>
 
-            {/* Show apis */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {currentUserSavedApisData.map((api) => (
-                    <SavedApiCard apiData={api} key={api} />
-                ))}
-            </div>
+                    <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                        Browse APIs in Sphere and save your favorites to access them quickly later.
+                    </p>
+                </div>
+            )}
         </section>
     );
 };

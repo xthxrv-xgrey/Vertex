@@ -29,8 +29,13 @@ const apiSlice = createSlice({
 
             state.apis[api.id] = api;
 
-            if (api.visibility === "public") state.publicApis[api.id] = 1;
-            if (api.visibility === "private") delete state.publicApis[api.id];
+            if (api.visibility === "public") {
+                state.publicApis[api.id] = 1;
+            }
+
+            if (api.visibility === "private") {
+                delete state.publicApis[api.id];
+            }
         },
 
         deleteApi: (state, action) => {
@@ -40,13 +45,23 @@ const apiSlice = createSlice({
 
             if (!api) return;
 
+            // Delete API data
             delete state.apis[apiId];
 
+            // Remove from user's APIs
             if (state.userApis[api.owner]) {
                 delete state.userApis[api.owner][apiId];
             }
 
+            // Remove from public APIs
             delete state.publicApis[apiId];
+
+            // Remove from all users' saved APIs
+            Object.keys(state.savedApis).forEach((email) => {
+                if (state.savedApis[email]?.[apiId]) {
+                    delete state.savedApis[email][apiId];
+                }
+            });
         },
 
         updateApi: (state, action) => {
@@ -74,7 +89,9 @@ const apiSlice = createSlice({
         unsaveApi: (state, action) => {
             const { id: apiId, email } = action.payload;
 
-            if (state.savedApis[email]) delete state.savedApis[email][apiId];
+            if (state.savedApis[email]) {
+                delete state.savedApis[email][apiId];
+            }
         },
     },
 });

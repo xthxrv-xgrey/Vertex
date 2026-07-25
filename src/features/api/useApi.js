@@ -16,17 +16,26 @@ export const useApis = () => {
     const userApis = useSelector((state) => state.apis.userApis);
 
     const publicApis = useSelector((state) => state.apis.publicApis);
-    const publicApisData = Object.keys(publicApis).map((apiId) => apis[apiId]);
+
+    const publicApisData = Object.keys(publicApis)
+        .map((apiId) => apis[apiId])
+        .filter(Boolean);
 
     const savedApis = useSelector((state) => state.apis.savedApis);
 
     const currentUser = useSelector((state) => state.auth.currentUser);
 
     const currentUserApis = userApis[currentUser] || {};
-    const currentUserApisData = Object.keys(currentUserApis).map((apiId) => apis[apiId]);
+
+    const currentUserApisData = Object.keys(currentUserApis)
+        .map((apiId) => apis[apiId])
+        .filter(Boolean);
 
     const currentUserSavedApis = savedApis[currentUser] || {};
-    const currentUserSavedApisData = Object.keys(currentUserSavedApis).map((apiId) => apis[apiId]);
+
+    const currentUserSavedApisData = Object.keys(currentUserSavedApis)
+        .map((apiId) => apis[apiId])
+        .filter(Boolean);
 
     const createApi = (apiData) => {
         const id = `api_${crypto.randomUUID()}`;
@@ -58,7 +67,8 @@ export const useApis = () => {
         }
 
         dispatch(deleteApiAction(apiId));
-        toast.success("API Deleted Sucessfully");
+
+        toast.success("API Deleted Successfully");
     };
 
     const saveApi = (apiId) => {
@@ -106,10 +116,12 @@ export const useApis = () => {
 
     const getApiById = (apiId) => {
         const api = apis[apiId];
+
         if (!api) {
             toast.error("API Not found");
             return;
         }
+
         return api;
     };
 
@@ -123,6 +135,7 @@ export const useApis = () => {
 
     return {
         apis,
+
         publicApis,
         publicApisData,
 
@@ -133,6 +146,7 @@ export const useApis = () => {
         currentUserSavedApisData,
 
         publicApiCount,
+
         getApiById,
         isUsersApi,
         isApiSaved,

@@ -36,12 +36,34 @@ const Vault = () => {
             {/* SearchBar */}
             <h2>Search bar comes here leaving space</h2>
 
-            {/* Show apis */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {apiDisplay.map((api) => (
-                    <VaultApiCard apiData={api} key={api.id} />
-                ))}
-            </div>
+            {/* Show APIs */}
+            {apiDisplay.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    {apiDisplay.map((api) => (
+                        <VaultApiCard apiData={api} key={api.id} />
+                    ))}
+                </div>
+            ) : (
+                <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
+                    <h3 className="text-xl font-semibold">{search ? "No APIs found" : "No APIs yet"}</h3>
+
+                    <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                        {search
+                            ? `No APIs match "${search}". Try a different search term.`
+                            : "Create your first API to start building your personal vault."}
+                    </p>
+
+                    {!search && (
+                        <Link
+                            to="/createApi"
+                            className="mt-6 flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground transition hover:opacity-90"
+                        >
+                            <Plus size={18} />
+                            Create API
+                        </Link>
+                    )}
+                </div>
+            )}
         </section>
     );
 };
