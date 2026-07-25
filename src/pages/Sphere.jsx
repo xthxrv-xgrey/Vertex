@@ -1,8 +1,18 @@
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import SphereApiCard from "../components/card/SphereApiCard.jsx";
+import { useApis } from "../features/api/useApi.js";
+import { useState, useMemo } from "react";
 
 const Sphere = () => {
+    const { publicApisData } = useApis();
+
+    const [search, setSearch] = useState("");
+
+    const apiDisplay = useMemo(() => {
+        return publicApisData.filter((api) => api.title.toLowerCase().includes(search.toLowerCase()));
+    }, [search, publicApisData]);
+
     return (
         <section className="flex flex-col gap-12 py-10">
             {/* Hero */}
@@ -20,13 +30,9 @@ const Sphere = () => {
 
             {/* Show apis */}
             <div className="min-h-[50vh] grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <SphereApiCard />
-                <SphereApiCard />
-                <SphereApiCard />
-                <SphereApiCard />
-                <SphereApiCard />
-                <SphereApiCard />
-                <SphereApiCard />
+                {apiDisplay.map((api) => (
+                    <SphereApiCard apiData={api} key={api.id} />
+                ))}
             </div>
         </section>
     );

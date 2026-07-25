@@ -1,8 +1,6 @@
 import React from "react";
 
 const VaultApiCard = ({ apiData }) => {
-    console.log(apiData);
-
     const methodColors = {
         get: "text-method-get",
         post: "text-method-post",

@@ -8,7 +8,10 @@ export const useApis = () => {
 
     const apis = useSelector((state) => state.apis.apis);
     const userApis = useSelector((state) => state.apis.userApis);
+
     const publicApis = useSelector((state) => state.apis.publicApis);
+    const publicApisData = Object.keys(publicApis).map((apiId) => apis[apiId]);
+
     const savedApis = useSelector((state) => state.apis.savedApis);
 
     const currentUser = useSelector((state) => state.auth.currentUser);
@@ -60,6 +63,7 @@ export const useApis = () => {
     return {
         apis,
         publicApis,
+        publicApisData,
 
         currentUserApis,
         currentUserApisData,
