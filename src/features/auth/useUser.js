@@ -19,7 +19,10 @@ export const useUser = () => {
 
     const getUserByUsername = (username) => {
         const userEmail = usernames[username];
-        if (!userEmail) toast.error("Username does not exists");
+        if (!userEmail) {
+            toast.error("Username does not exists");
+            return;
+        }
         return users[userEmail];
     };
 

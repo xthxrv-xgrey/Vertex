@@ -4,6 +4,7 @@ const VaultApiCard = ({ apiData }) => {
     const methodColors = {
         get: "text-method-get",
         post: "text-method-post",
+        patch: "text-method-patch",
         put: "text-method-put",
         delete: "text-method-delete",
     };

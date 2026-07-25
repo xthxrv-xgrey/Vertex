@@ -4,7 +4,6 @@ import { useApis } from "../features/api/useApi.js";
 
 const Saved = () => {
     const { currentUserSavedApisData } = useApis();
-    console.log("hello", currentUserSavedApisData);
 
     return (
         <section className="flex flex-col gap-12 py-10">

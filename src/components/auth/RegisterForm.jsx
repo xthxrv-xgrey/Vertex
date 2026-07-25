@@ -20,7 +20,6 @@ const RegisterForm = () => {
     } = useForm();
 
     const formSubmit = (data) => {
-        console.log(data);
         if (registerUser(data)) {
             reset();
             navigate("/dashboard", { replace: true });
