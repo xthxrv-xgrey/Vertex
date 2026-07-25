@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router";
 
 const VaultApiCard = ({ apiData }) => {
     const methodColors = {
@@ -9,7 +9,10 @@ const VaultApiCard = ({ apiData }) => {
     };
 
     return (
-        <div className="group rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ring/40">
+        <Link
+            to={`/apis/${apiData.id}`}
+            className="block group rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ring/40"
+        >
             <div className="flex items-start justify-between">
                 <div className="flex gap-3 items-center">
                     <div className="rounded-lg border border-border bg-secondary px-2.5 py-1">
@@ -40,11 +43,9 @@ const VaultApiCard = ({ apiData }) => {
                     })}
                 </p>
 
-                <button className="rounded-lg border border-border px-3 py-1.5 text-xs hover:bg-secondary transition">
-                    Open
-                </button>
+                <span className="rounded-lg border border-border px-3 py-1.5 text-xs">Open</span>
             </div>
-        </div>
+        </Link>
     );
 };
 

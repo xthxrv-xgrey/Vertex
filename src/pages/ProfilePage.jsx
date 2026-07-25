@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router";
 import { Calendar, Globe, Mail, User } from "lucide-react";
 import { RiGithubFill, RiLinkedinBoxFill } from "react-icons/ri";
@@ -11,7 +10,7 @@ const StatusBadge = ({ children = "Upcoming" }) => (
     </span>
 );
 
-const Profile = () => {
+const ProfilePage = () => {
     const { username } = useParams();
     const { getUserByUsername } = useUser();
 
@@ -169,4 +168,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default ProfilePage;

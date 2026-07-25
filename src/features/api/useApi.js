@@ -81,6 +81,23 @@ export const useApis = () => {
         }, 0);
     }, [currentUserApis, publicApis]);
 
+    const getApiById = (apiId) => {
+        const api = apis[apiId];
+        if (!api) {
+            toast.error("API Not found");
+            return;
+        }
+        return api;
+    };
+
+    const isUsersApi = (apiId) => {
+        return currentUserApis[apiId];
+    };
+
+    const isApiSaved = (apiId) => {
+        return !!savedApis[currentUser]?.[apiId];
+    };
+
     return {
         apis,
         publicApis,
@@ -93,6 +110,9 @@ export const useApis = () => {
         currentUserSavedApisData,
 
         publicApiCount,
+        getApiById,
+        isUsersApi,
+        isApiSaved,
 
         createApi,
         saveApi,

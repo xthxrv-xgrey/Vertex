@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 import { useApis } from "../../features/api/useApi";
 import { useUser } from "../../features/auth/useUser";
 
@@ -14,7 +15,10 @@ const SavedApiCard = ({ apiData }) => {
     };
 
     return (
-        <div className="group rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ring/40">
+        <Link
+            to={`/apis/${apiData.id}`}
+            className="block group rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ring/40"
+        >
             <div className="flex items-start justify-between">
                 <div className="flex gap-3 items-center">
                     <div className="rounded-lg border border-border bg-secondary px-2.5 py-1">
@@ -27,7 +31,10 @@ const SavedApiCard = ({ apiData }) => {
                 </div>
 
                 <button
-                    onClick={() => unsaveApi(apiData.id)}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        unsaveApi(apiData.id);
+                    }}
                     className="rounded-lg border border-border px-3 py-1.5 text-xs hover:bg-secondary transition"
                 >
                     Remove
@@ -45,7 +52,7 @@ const SavedApiCard = ({ apiData }) => {
 
                 <p className="text-xs text-muted-foreground">Saved</p>
             </div>
-        </div>
+        </Link>
     );
 };
 
