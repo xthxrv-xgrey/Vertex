@@ -18,6 +18,7 @@ import ApiPage from "../pages/ApiPage.jsx";
 
 import Login from "../pages/auth/Login.jsx";
 import Register from "../pages/auth/Register.jsx";
+import EditApi from "../pages/EditApi.jsx";
 
 const router = createBrowserRouter([
     // Landing Route
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
                     {
                         path: "/apis/:apiId",
                         element: <ApiPage />,
+                    },
+                    {
+                        path: "/editApi/:apiId",
+                        element: <EditApi />,
                     },
                     {
                         path: "/users/:username",

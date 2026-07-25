@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { createApi as createApiAction, saveApi as saveApiAction, unsaveApi as unsaveApiAction } from "./apiSlice.js";
+import {
+    createApi as createApiAction,
+    editApi as editApiAction,
+    deleteApi as deleteApiAction,
+    saveApi as saveApiAction,
+    unsaveApi as unsaveApiAction,
+} from "./apiSlice.js";
 import { useMemo } from "react";
 
 export const useApis = () => {
@@ -36,6 +42,23 @@ export const useApis = () => {
         dispatch(createApiAction(newAPI));
 
         toast.success("API Created Successfully");
+    };
+
+    const editApi = (apiData) => {
+        dispatch(editApiAction(apiData));
+        toast.success("API Edited Successfully");
+    };
+
+    const deleteApi = (apiId) => {
+        const api = apis[apiId];
+
+        if (!currentUserApis[apiId]) {
+            toast.error("API does not belongs to you");
+            return;
+        }
+
+        dispatch(deleteApiAction(apiId));
+        toast.success("API Deleted Sucessfully");
     };
 
     const saveApi = (apiId) => {
@@ -115,6 +138,8 @@ export const useApis = () => {
         isApiSaved,
 
         createApi,
+        editApi,
+        deleteApi,
         saveApi,
         unsaveApi,
     };

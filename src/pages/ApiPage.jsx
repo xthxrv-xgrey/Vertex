@@ -66,7 +66,7 @@ const ApiPage = () => {
                             {isOwner ? (
                                 <>
                                     <Link
-                                        to={`/apis/${api.id}/edit`}
+                                        to={`/editApi/${api.id}`}
                                         className="inline-flex items-center gap-2 rounded-xl border border-border px-4 py-2 hover:bg-accent"
                                     >
                                         <Pencil size={18} />
@@ -75,7 +75,7 @@ const ApiPage = () => {
 
                                     <button
                                         onClick={handleDelete}
-                                        className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                                        className="inline-flex items-center gap-2 rounded-xl bg-red-500 px-4 py-2 text-white hover:bg-red-700"
                                     >
                                         <Trash2 size={18} />
                                         Delete
@@ -101,26 +101,6 @@ const ApiPage = () => {
                             )}
                         </div>
                     </div>
-
-                    {isOwner && (
-                        <div className="flex gap-3">
-                            <Link
-                                to={`/api/${api.id}/edit`}
-                                className="inline-flex items-center gap-2 rounded-xl border border-border px-4 py-2 font-medium transition-colors hover:bg-accent"
-                            >
-                                <Pencil size={18} />
-                                Edit
-                            </Link>
-
-                            <button
-                                onClick={handleDelete}
-                                className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 font-medium text-white transition-colors hover:bg-red-700"
-                            >
-                                <Trash2 size={18} />
-                                Delete
-                            </button>
-                        </div>
-                    )}
                 </div>
 
                 <div className="overflow-x-auto rounded-xl border border-border bg-muted/40 p-4">

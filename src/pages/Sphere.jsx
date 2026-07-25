@@ -29,7 +29,7 @@ const Sphere = () => {
             <h2>Search bar comes here leaving space</h2>
 
             {/* Show apis */}
-            <div className="min-h-[50vh] grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {apiDisplay.map((api) => (
                     <SphereApiCard apiData={api} key={api.id} />
                 ))}

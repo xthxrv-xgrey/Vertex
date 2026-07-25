@@ -24,6 +24,15 @@ const apiSlice = createSlice({
             }
         },
 
+        editApi: (state, action) => {
+            const api = action.payload;
+
+            state.apis[api.id] = api;
+
+            if (api.visibility === "public") state.publicApis[api.id] = 1;
+            if (api.visibility === "private") delete state.publicApis[api.id];
+        },
+
         deleteApi: (state, action) => {
             const apiId = action.payload;
 
@@ -70,6 +79,6 @@ const apiSlice = createSlice({
     },
 });
 
-export const { createApi, deleteApi, updateApi, saveApi, unsaveApi } = apiSlice.actions;
+export const { createApi, editApi, deleteApi, updateApi, saveApi, unsaveApi } = apiSlice.actions;
 
 export default apiSlice.reducer;
