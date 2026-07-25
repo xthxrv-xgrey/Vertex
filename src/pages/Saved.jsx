@@ -1,7 +1,10 @@
 import React from "react";
 import SavedApiCard from "../components/card/SavedApiCard.jsx";
+import { useApis } from "../features/api/useApi.js";
 
 const Saved = () => {
+    const { currentUserSavedApisData } = useApis();
+
     return (
         <section className="flex flex-col gap-12 py-10">
             {/* Hero */}
@@ -16,13 +19,10 @@ const Saved = () => {
             </section>
 
             {/* Show apis */}
-            <div className="min-h-[50vh] grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <SavedApiCard />
-                <SavedApiCard />
-                <SavedApiCard />
-                <SavedApiCard />
-                <SavedApiCard />
-                <SavedApiCard />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {currentUserSavedApisData.map((api) => (
+                    <SavedApiCard apiData={api} key={api} />
+                ))}
             </div>
         </section>
     );

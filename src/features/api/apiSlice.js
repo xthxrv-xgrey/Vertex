@@ -61,9 +61,15 @@ const apiSlice = createSlice({
 
             state.savedApis[email][apiId] = 1;
         },
+
+        unsaveApi: (state, action) => {
+            const { id: apiId, email } = action.payload;
+
+            if (state.savedApis[email]) delete state.savedApis[email][apiId];
+        },
     },
 });
 
-export const { createApi, deleteApi, updateApi, saveApi } = apiSlice.actions;
+export const { createApi, deleteApi, updateApi, saveApi, unsaveApi } = apiSlice.actions;
 
 export default apiSlice.reducer;

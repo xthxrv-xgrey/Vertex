@@ -8,8 +8,18 @@ export const useUser = () => {
     const users = useSelector((state) => state.auth.users);
     const usernames = useSelector((state) => state.auth.usernames);
 
+    const getUsernameByEmail = (email) => {
+        const user = users[email];
+        if (!user) {
+            toast.error("User with this email does not exists");
+            return;
+        }
+        return user.username;
+    };
+
     return {
         firstName: currentUser ? users[currentUser].firstName : null,
         avatar: currentUser ? users[currentUser].avatar : null,
+        getUsernameByEmail,
     };
 };

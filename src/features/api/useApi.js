@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { createApi as createApiAction, saveApi as saveApiAction } from "./apiSlice.js";
+import { createApi as createApiAction, saveApi as saveApiAction, unsaveApi as unsaveApiAction } from "./apiSlice.js";
 import { useMemo } from "react";
 
 export const useApis = () => {
@@ -54,6 +54,27 @@ export const useApis = () => {
         toast.success("API Saved Successfully");
     };
 
+    const unsaveApi = (apiId) => {
+        if (!currentUser) {
+            toast.error("Please login");
+            return;
+        }
+
+        if (!apis[apiId]) {
+            toast.error("Api not found!");
+            return;
+        }
+
+        dispatch(
+            unsaveApiAction({
+                id: apiId,
+                email: currentUser,
+            })
+        );
+
+        toast.success("API Removed Successfully");
+    };
+
     const publicApiCount = useMemo(() => {
         return Object.keys(currentUserApis).reduce((count, apiId) => {
             return publicApis[apiId] ? count + 1 : count;
@@ -75,5 +96,6 @@ export const useApis = () => {
 
         createApi,
         saveApi,
+        unsaveApi,
     };
 };

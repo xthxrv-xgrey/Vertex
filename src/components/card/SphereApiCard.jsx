@@ -1,6 +1,11 @@
 import React from "react";
+import { useApis } from "../../features/api/useApi";
+import { useUser } from "../../features/auth/useUser";
 
 const SphereApiCard = ({ apiData }) => {
+    const { saveApi, currentUserSavedApis } = useApis();
+    const { getUsernameByEmail } = useUser();
+
     const methodColors = {
         get: "text-method-get",
         post: "text-method-post",
@@ -13,27 +18,34 @@ const SphereApiCard = ({ apiData }) => {
                 <div className="flex gap-3 items-center">
                     <div className="rounded-lg border border-border bg-secondary px-2.5 py-1">
                         <p className={`font-mono text-xs font-semibold ${methodColors[apiData.method.toLowerCase()]}`}>
-                            GET
+                            {apiData.method}
                         </p>
                     </div>
 
-                    <h2 className="font-semibold text-lg">Login API</h2>
+                    <h2 className="font-semibold text-lg">{apiData.title}</h2>
                 </div>
 
-                <button className="rounded-lg bg-primary px-3 py-1.5 text-xs text-primary-foreground transition hover:opacity-90">
-                    Save
+                <button
+                    onClick={() => saveApi(apiData.id)}
+                    disabled={currentUserSavedApis[apiData.id]}
+                    className={`rounded-lg px-3 py-1.5 text-xs transition
+                    ${
+                        currentUserSavedApis[apiData.id]
+                            ? "cursor-not-allowed bg-muted text-muted-foreground opacity-70"
+                            : "bg-primary text-primary-foreground hover:opacity-90"
+                    }`}
+                >
+                    {currentUserSavedApis[apiData.id] ? "Saved" : "Save"}
                 </button>
             </div>
 
-            <p className="mt-5 truncate font-mono text-xs text-muted-foreground">https://api.vertex.dev/auth/login</p>
+            <p className="mt-5 truncate font-mono text-xs text-muted-foreground">{apiData.baseUrl + apiData.url}</p>
 
-            <p className="mt-4 line-clamp-2 text-sm leading-6 text-muted-foreground">
-                JWT authentication endpoint with refresh tokens, session validation and logout support.
-            </p>
+            <p className="mt-4 line-clamp-2 text-sm leading-6 text-muted-foreground">{apiData.description}</p>
 
             <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
                 <p className="text-xs text-muted-foreground">
-                    Published by <span className="text-foreground">atharv-agrey</span>
+                    Published by <span className="text-foreground">{getUsernameByEmail(apiData.owner)}</span>
                 </p>
 
                 <p className="text-xs text-muted-foreground">Public API</p>
