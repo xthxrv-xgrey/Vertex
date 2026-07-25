@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&family=Space+Grotesk:wght@300..700&display=swap");
+
+@import "tailwindcss";
+
+/* ===========================
+   Utilities
+=========================== */
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* ===========================
+   Design Tokens
+=========================== */
+
+:root {
+  --radius: 0.5rem;
+
+  /* Base */
+  --background: oklch(99.5% .002 90);
+  --foreground: oklch(18% .01 260);
+
+  /* Surface */
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(18% .01 260);
+
+  /* Brand */
+  --primary: oklch(22% .01 260);
+  --primary-foreground: oklch(99% 0 0);
+
+  /* Secondary */
+  --secondary: oklch(96.5% .003 260);
+  --secondary-foreground: oklch(22% .01 260);
+
+  /* Muted */
+  --muted: oklch(96.5% .003 260);
+  --muted-foreground: oklch(52% .01 260);
+
+  /* UI */
+  --border: oklch(92% .004 260);
+  --ring: oklch(55% .15 255);
+
+  /* HTTP Methods */
+  --method-get: oklch(55% .13 155);
+  --method-post: oklch(55% .15 255);
+  --method-put: oklch(62% .14 65);
+  --method-patch: oklch(58% .14 305);
+  --method-delete: oklch(58% .19 25);
+}
+
+/* ===========================
+   Tailwind Theme
+=========================== */
+
+@theme {
+  /* Fonts */
+  --font-sans: "Inter", sans-serif;
+  --font-logo: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Radius */
+  --radius-md: var(--radius);
+
+  /* Base */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Surface */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  /* Brand */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* Secondary */
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Muted */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* UI */
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  /* HTTP Methods */
+  --color-method-get: var(--method-get);
+  --color-method-post: var(--method-post);
+  --color-method-put: var(--method-put);
+  --color-method-patch: var(--method-patch);
+  --color-method-delete: var(--method-delete);
+}
+
+/* ===========================
+   Base Styles
+=========================== */
+
+body {
+  @apply bg-background text-foreground font-sans;
+}
