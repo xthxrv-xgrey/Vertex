@@ -9,7 +9,7 @@ const Header = () => {
     const [profileMenu, setProfileMenu] = useState(false);
 
     const { signOut } = useAuth();
-    const { avatar } = useUser();
+    const { avatar, username } = useUser();
 
     const profileRef = useRef(null);
 
@@ -78,7 +78,7 @@ const Header = () => {
                         {profileMenu && (
                             <div className="absolute right-0 mt-3 w-52 overflow-hidden rounded-xl border border-border bg-background shadow-lg">
                                 <NavLink
-                                    to="/profile"
+                                    to={`/users/${username}`}
                                     onClick={() => setProfileMenu(false)}
                                     className="flex items-center gap-3 px-4 py-3 hover:bg-muted transition"
                                 >

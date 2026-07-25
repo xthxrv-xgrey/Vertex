@@ -13,6 +13,7 @@ import Vault from "../pages/Vault.jsx";
 import Sphere from "../pages/Sphere.jsx";
 import Saved from "../pages/Saved.jsx";
 import CreateApi from "../pages/CreateApi.jsx";
+import Profile from "../pages/Profile.jsx";
 
 import Login from "../pages/auth/Login.jsx";
 import Register from "../pages/auth/Register.jsx";
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
                     {
                         path: "/createApi",
                         element: <CreateApi />,
+                    },
+                    {
+                        path: "/users/:username",
+                        element: <Profile />,
                     },
                 ],
             },

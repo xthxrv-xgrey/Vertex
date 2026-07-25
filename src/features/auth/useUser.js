@@ -17,9 +17,17 @@ export const useUser = () => {
         return user.username;
     };
 
+    const getUserByUsername = (username) => {
+        const userEmail = usernames[username];
+        if (!userEmail) toast.error("Username does not exists");
+        return users[userEmail];
+    };
+
     return {
         firstName: currentUser ? users[currentUser].firstName : null,
+        username: currentUser ? users[currentUser].username : null,
         avatar: currentUser ? users[currentUser].avatar : null,
         getUsernameByEmail,
+        getUserByUsername,
     };
 };
