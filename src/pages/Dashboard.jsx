@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import RecentActivityCard from "../components/card/RecentActivityCard.jsx";
 
 import { useUser } from "../features/auth/useUser.js";
+import { useApis } from "../features/api/useApi.js";
 
 const Dashboard = () => {
     const today = new Intl.DateTimeFormat("en-US", {
@@ -13,6 +14,7 @@ const Dashboard = () => {
     }).format(new Date());
 
     const { firstName } = useUser();
+    const { currentUserApis, currentUserSavedApis, publicApiCount } = useApis();
 
     return (
         <section className="flex flex-col gap-12 py-10">
@@ -42,7 +44,7 @@ const Dashboard = () => {
                 <div className="flex-1 border-border p-6 not-last:border-b md:not-last:border-r md:not-last:border-b-0">
                     <p className="font-mono text-sm uppercase tracking-wide text-muted-foreground">Total APIs</p>
 
-                    <p className="mt-6 text-4xl font-semibold tracking-tight">{1}</p>
+                    <p className="mt-6 text-4xl font-semibold tracking-tight">{Object.keys(currentUserApis).length}</p>
 
                     <p className="mt-2 text-sm text-muted-foreground">In your workspace</p>
                 </div>
@@ -50,7 +52,7 @@ const Dashboard = () => {
                 <div className="flex-1 border-border p-6 not-last:border-b md:not-last:border-r md:not-last:border-b-0">
                     <p className="font-mono text-sm uppercase tracking-wide text-muted-foreground">Public APIs</p>
 
-                    <p className="mt-6 text-4xl font-semibold tracking-tight">1</p>
+                    <p className="mt-6 text-4xl font-semibold tracking-tight">{publicApiCount}</p>
 
                     <p className="mt-2 text-sm text-muted-foreground">Visible to everyone</p>
                 </div>
@@ -58,7 +60,9 @@ const Dashboard = () => {
                 <div className="flex-1 border-border p-6 not-last:border-b md:not-last:border-r md:not-last:border-b-0">
                     <p className="font-mono text-sm uppercase tracking-wide text-muted-foreground">Saved</p>
 
-                    <p className="mt-6 text-4xl font-semibold tracking-tight">1</p>
+                    <p className="mt-6 text-4xl font-semibold tracking-tight">
+                        {Object.keys(currentUserSavedApis).length}
+                    </p>
 
                     <p className="mt-2 text-sm text-muted-foreground">Bookmarked APIs</p>
                 </div>

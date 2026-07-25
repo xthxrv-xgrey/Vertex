@@ -1,54 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loadApiState } from "../../redux/localStorage";
 
-const initialState = {
-    apis: {
-        api_123456: {
-            id: "api_123456",
-            owner: "atharv@gmail.com",
-            title: "Login API",
-            description: "Authenticate user credentials",
-            method: "POST",
-            visibility: "public",
-            status: "active",
-            url: "https://example.com/api/login",
-            baseUrl: "https://example.com",
-
-            headers: {
-                Authorization: "Bearer Token",
-                Accept: "application/json",
-            },
-
-            requestBody: `{
-    "email": "string",
-    "password": "string"
-}`,
-
-            responseBody: `{
-    "token": "...",
-    "user": {}
-}`,
-
-            createdAt: Date.now(),
-            updatedAt: Date.now(),
-        },
-    },
-
-    userApis: {
-        "atharv@gmail.com": {
-            api_123456: 1,
-        },
-    },
-
-    publicApis: {
-        api_123456: 1,
-    },
-
-    savedApis: {
-        "atharv@gmail.com": {
-            api_123456: 1,
-        },
-    },
-};
+const initialState = loadApiState();
 
 const apiSlice = createSlice({
     name: "apis",

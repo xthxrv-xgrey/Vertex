@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import VaultApiCard from "../components/card/VaultApiCard.jsx";
+import { useApis } from "../features/api/useApi.js";
 
 const Vault = () => {
+    const { currentUserApisData } = useApis();
+
+    const [search, setSearch] = useState("");
+
+    const apiDisplay = useMemo(() => {
+        return currentUserApisData.filter((api) => api.title.toLowerCase().includes(search.toLowerCase()));
+    }, [search, currentUserApisData]);
+
     return (
         <section className="flex flex-col gap-12 py-10">
             {/* Hero */}
@@ -28,13 +37,10 @@ const Vault = () => {
             <h2>Search bar comes here leaving space</h2>
 
             {/* Show apis */}
-            <div className="min-h-[50vh] grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* max 5 */}
-                <VaultApiCard />
-                <VaultApiCard />
-                <VaultApiCard />
-                <VaultApiCard />
-                <VaultApiCard />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {apiDisplay.map((api) => (
+                    <VaultApiCard apiData={api} key={api.id} />
+                ))}
             </div>
         </section>
     );

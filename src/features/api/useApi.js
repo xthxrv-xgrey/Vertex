@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { createApi as createApiAction, saveApi as saveApiAction } from "./apiSlice.js";
+import { useMemo } from "react";
 
 export const useApis = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,10 @@ export const useApis = () => {
     const currentUser = useSelector((state) => state.auth.currentUser);
 
     const currentUserApis = userApis[currentUser] || {};
+    const currentUserApisData = Object.keys(currentUserApis).map((apiId) => apis[apiId]);
+
     const currentUserSavedApis = savedApis[currentUser] || {};
+    const currentUserSavedApisData = Object.keys(currentUserSavedApis).map((apiId) => apis[apiId]);
 
     const createApi = (apiData) => {
         const id = `api_${crypto.randomUUID()}`;
@@ -47,12 +51,23 @@ export const useApis = () => {
         toast.success("API Saved Successfully");
     };
 
+    const publicApiCount = useMemo(() => {
+        return Object.keys(currentUserApis).reduce((count, apiId) => {
+            return publicApis[apiId] ? count + 1 : count;
+        }, 0);
+    }, [currentUserApis, publicApis]);
+
     return {
         apis,
         publicApis,
 
         currentUserApis,
+        currentUserApisData,
+
         currentUserSavedApis,
+        currentUserSavedApisData,
+
+        publicApiCount,
 
         createApi,
         saveApi,
