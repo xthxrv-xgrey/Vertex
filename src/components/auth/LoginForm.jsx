@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../features/auth/useAuth.js";
 import { Eye, EyeOff } from "lucide-react";
 
 const LoginForm = () => {
     const { signIn } = useAuth();
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +20,7 @@ const LoginForm = () => {
     const formSubmit = (data) => {
         if (signIn(data)) {
             reset();
-            <Navigate to="/dashboard" replace />;
+            navigate("/dashboard", { replace: true });
         }
     };
     return (
