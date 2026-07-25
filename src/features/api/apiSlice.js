@@ -93,9 +93,28 @@ const apiSlice = createSlice({
                 delete state.savedApis[email][apiId];
             }
         },
+
+        visitedApi: (state, action) => {
+            const { apiId, email } = action.payload;
+
+            if (!state.recentlyVisitedApis[email]) {
+                state.recentlyVisitedApis[email] = [];
+            }
+
+            const visited = state.recentlyVisitedApis[email];
+
+            // Remove existing occurrence (if any)
+            const filtered = visited.filter((id) => id !== apiId);
+
+            // Add latest visit at the beginning
+            filtered.unshift(apiId);
+
+            // Keep only latest 5
+            state.recentlyVisitedApis[email] = filtered.slice(0, 5);
+        },
     },
 });
 
-export const { createApi, editApi, deleteApi, updateApi, saveApi, unsaveApi } = apiSlice.actions;
+export const { createApi, editApi, deleteApi, updateApi, saveApi, unsaveApi, visitedApi } = apiSlice.actions;
 
 export default apiSlice.reducer;

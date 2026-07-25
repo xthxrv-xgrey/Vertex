@@ -12,7 +12,7 @@ export const store = configureStore({
 
 store.subscribe(() => {
     const { currentUser, users, usernames } = store.getState().auth;
-    const { apis, userApis, publicApis, savedApis } = store.getState().apis;
+    const { apis, userApis, publicApis, savedApis, recentlyVisitedApis } = store.getState().apis;
 
     saveAuthState({
         currentUser,
@@ -25,5 +25,6 @@ store.subscribe(() => {
         userApis,
         publicApis,
         savedApis,
+        recentlyVisitedApis,
     });
 });

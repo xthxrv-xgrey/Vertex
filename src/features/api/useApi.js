@@ -6,6 +6,7 @@ import {
     deleteApi as deleteApiAction,
     saveApi as saveApiAction,
     unsaveApi as unsaveApiAction,
+    visitedApi as visitedApiAction,
 } from "./apiSlice.js";
 import { useMemo } from "react";
 
@@ -26,6 +27,11 @@ export const useApis = () => {
     const currentUser = useSelector((state) => state.auth.currentUser);
 
     const currentUserApis = userApis[currentUser] || {};
+
+    const recentlyVisitedApis = useSelector((state) => state.apis.recentlyVisitedApis);
+    const currentUserVisitedApis = recentlyVisitedApis[currentUser] || [];
+
+    const currentUserVisitedApisData = currentUserVisitedApis.map((apiId) => apis[apiId]).filter(Boolean);
 
     const currentUserApisData = Object.keys(currentUserApis)
         .map((apiId) => apis[apiId])
@@ -108,6 +114,24 @@ export const useApis = () => {
         toast.success("API Removed Successfully");
     };
 
+    const visitApi = (apiId) => {
+        if (!currentUser) {
+            return;
+        }
+
+        if (!apis[apiId]) {
+            toast.error("API not found");
+            return;
+        }
+
+        dispatch(
+            visitedApiAction({
+                apiId,
+                email: currentUser,
+            })
+        );
+    };
+
     const publicApiCount = useMemo(() => {
         return Object.keys(currentUserApis).reduce((count, apiId) => {
             return publicApis[apiId] ? count + 1 : count;
@@ -145,6 +169,9 @@ export const useApis = () => {
         currentUserSavedApis,
         currentUserSavedApisData,
 
+        currentUserVisitedApis,
+        currentUserVisitedApisData,
+
         publicApiCount,
 
         getApiById,
@@ -156,5 +183,6 @@ export const useApis = () => {
         deleteApi,
         saveApi,
         unsaveApi,
+        visitApi,
     };
 };

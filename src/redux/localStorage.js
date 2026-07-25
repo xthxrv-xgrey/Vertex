@@ -29,6 +29,7 @@ export const loadApiState = () => {
             userApis: JSON.parse(localStorage.getItem("userApis")) || {},
             publicApis: JSON.parse(localStorage.getItem("publicApis")) || {},
             savedApis: JSON.parse(localStorage.getItem("savedApis")) || {},
+            recentlyVisitedApis: JSON.parse(localStorage.getItem("recentlyVisitedApis")) || {},
         };
     } catch (error) {
         return {
@@ -36,6 +37,7 @@ export const loadApiState = () => {
             userApis: {},
             publicApis: {},
             savedApis: {},
+            recentlyVisitedApis: {},
         };
     }
 };
@@ -45,4 +47,5 @@ export const saveApiState = (state) => {
     localStorage.setItem("userApis", JSON.stringify(state.userApis));
     localStorage.setItem("publicApis", JSON.stringify(state.publicApis));
     localStorage.setItem("savedApis", JSON.stringify(state.savedApis));
+    localStorage.setItem("recentlyVisitedApis", JSON.stringify(state.recentlyVisitedApis));
 };

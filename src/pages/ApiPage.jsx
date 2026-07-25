@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { Pencil, Trash2, Bookmark, BookmarkCheck } from "lucide-react";
 
@@ -23,10 +24,16 @@ const ApiPage = () => {
     const { apiId } = useParams();
     const navigate = useNavigate();
 
-    const { getApiById, isUsersApi, deleteApi, isApiSaved, saveApi, unsaveApi } = useApis();
+    const { getApiById, isUsersApi, deleteApi, isApiSaved, saveApi, unsaveApi, visitApi } = useApis();
     const { currentUser } = useAuth();
 
     const api = getApiById(apiId);
+
+    useEffect(() => {
+        if (api?.id) {
+            visitApi(api.id);
+        }
+    }, [api?.id]);
 
     if (!api) {
         return (

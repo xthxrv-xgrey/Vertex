@@ -14,8 +14,7 @@ const Dashboard = () => {
     }).format(new Date());
 
     const { firstName } = useUser();
-    const { currentUserApis, currentUserSavedApis, publicApiCount } = useApis();
-
+    const { currentUserApis, currentUserSavedApis, publicApiCount, currentUserVisitedApisData } = useApis();
     return (
         <section className="flex flex-col gap-12 py-10">
             {/* Hero */}
@@ -79,10 +78,9 @@ const Dashboard = () => {
                 </div>
 
                 <div className="space-y-4">
-                    <RecentActivityCard />
-                    <RecentActivityCard />
-                    <RecentActivityCard />
-                    <RecentActivityCard />
+                    {currentUserVisitedApisData.map((api) => {
+                        return <RecentActivityCard key={api.id} apiData={api} />;
+                    })}
                 </div>
 
                 {/* Empty State */}
