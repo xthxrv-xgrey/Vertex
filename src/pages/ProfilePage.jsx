@@ -25,7 +25,6 @@ const ProfilePage = () => {
     }
 
     const isOwner = currentUser === user.email;
-    console.log(isOwner);
 
     return (
         <div className="max-w-6xl mx-auto py-10 space-y-8">
