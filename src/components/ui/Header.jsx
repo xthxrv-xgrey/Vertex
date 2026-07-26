@@ -172,7 +172,7 @@ const Header = () => {
                     <div className="my-3 border-t border-border" />
 
                     <NavLink
-                        to="/profile"
+                        to={`users/${username}`}
                         onClick={closeMenu}
                         className="flex items-center gap-3 rounded-lg px-3 py-3 transition hover:bg-muted"
                     >

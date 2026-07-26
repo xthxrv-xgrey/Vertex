@@ -37,6 +37,15 @@ export const useApis = () => {
         .map((apiId) => apis[apiId])
         .filter(Boolean);
 
+    const getPublicApisByUserEmail = (email) => {
+        const userApiMap = userApis[email] || {};
+
+        return Object.keys(userApiMap)
+            .filter((apiId) => publicApis[apiId])
+            .map((apiId) => apis[apiId])
+            .filter(Boolean);
+    };
+
     const currentUserSavedApis = savedApis[currentUser] || {};
 
     const currentUserSavedApisData = Object.keys(currentUserSavedApis)
@@ -162,6 +171,8 @@ export const useApis = () => {
 
         publicApis,
         publicApisData,
+
+        getPublicApisByUserEmail,
 
         currentUserApis,
         currentUserApisData,

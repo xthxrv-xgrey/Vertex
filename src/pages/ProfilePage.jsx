@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { Calendar, Globe, Mail, Pencil, User, FolderGit2 } from "lucide-react";
 import { RiGithubFill, RiLinkedinBoxFill } from "react-icons/ri";
 
 import { useUser } from "../features/auth/useUser";
 import { useAuth } from "../features/auth/useAuth";
 import EditProfileModal from "../components/modals/EditProfileModal";
+import { useApis } from "../features/api/useApi";
 
 const ProfilePage = () => {
     const { username } = useParams();
 
     const { getUserByUsername } = useUser();
     const { currentUser } = useAuth();
+    const { getPublicApisByUserEmail } = useApis();
 
     const user = getUserByUsername(username);
+
+    const publicApisData = getPublicApisByUserEmail(user.email);
 
     const [editing, setEditing] = useState(false);
     if (!user) {
@@ -121,73 +125,97 @@ const ProfilePage = () => {
 
             {/* ================= CONTENT ================= */}
 
-            <div className="grid lg:grid-cols-3 gap-8">
-                {/* LEFT */}
+            <div className="rounded-2xl border border-border bg-card p-6">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-semibold">Published APIs</h2>
 
-                <div className="space-y-6">
-                    <div className="rounded-2xl border border-border bg-card p-6">
-                        <h2 className="text-lg font-semibold mb-6">Account Information</h2>
-
-                        <div className="space-y-5">
-                            <div>
-                                <p className="text-sm text-muted-foreground">Full Name</p>
-                                <p className="font-medium">
-                                    {user.firstName} {user.lastName}
-                                </p>
-                            </div>
-
-                            <div>
-                                <p className="text-sm text-muted-foreground">Username</p>
-                                <p className="font-medium">@{user.username}</p>
-                            </div>
-
-                            <div>
-                                <p className="text-sm text-muted-foreground">Email</p>
-                                <p className="font-medium">{user.email}</p>
-                            </div>
-
-                            <div>
-                                <p className="text-sm text-muted-foreground">Member Since</p>
-                                <p className="font-medium">{new Date(user.createdAt).toLocaleDateString()}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <span className="text-sm text-muted-foreground">
+                        {publicApisData.length} API{publicApisData.length !== 1 && "s"}
+                    </span>
                 </div>
 
-                {/* RIGHT */}
+                {publicApisData.length === 0 ? (
+                    <div className="mt-8 border border-dashed border-border rounded-2xl py-20 flex flex-col items-center">
+                        <FolderGit2 className="text-muted-foreground" size={54} />
 
-                <div className="lg:col-span-2">
-                    <div className="rounded-2xl border border-border bg-card p-6">
-                        <div className="flex items-center justify-between">
-                            <h2 className="text-lg font-semibold">Published APIs</h2>
+                        <h3 className="text-xl font-semibold mt-6">No APIs Published</h3>
 
-                            <span className="text-sm text-muted-foreground">0 APIs</span>
-                        </div>
+                        <p className="text-muted-foreground mt-2 text-center max-w-sm">
+                            {isOwner
+                                ? "You haven't published any APIs yet."
+                                : "This user hasn't published any APIs yet."}
+                        </p>
 
-                        <div className="mt-8 border border-dashed border-border rounded-2xl py-20 flex flex-col items-center">
-                            <FolderGit2 className="text-muted-foreground" size={54} />
-
-                            <h3 className="text-xl font-semibold mt-6">No APIs Published</h3>
-
-                            <p className="text-muted-foreground mt-2 text-center max-w-sm">
-                                {isOwner
-                                    ? "You haven't published any APIs yet."
-                                    : "This user hasn't published any APIs yet."}
-                            </p>
-
-                            {isOwner && (
-                                <button className="mt-8 px-5 py-2 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition">
-                                    Publish your first API
-                                </button>
-                            )}
-                        </div>
+                        {isOwner && (
+                            <Link
+                                to="/createApi"
+                                className="mt-8 px-5 py-2 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition"
+                            >
+                                Publish your first API
+                            </Link>
+                        )}
                     </div>
-                </div>
+                ) : (
+                    <div className="mt-8 max-h-150 overflow-y-auto pr-2 space-y-5">
+                        {publicApisData.map((api) => (
+                            <Link
+                                key={api.id}
+                                to={`/api/${api.id}`}
+                                className="block rounded-2xl border border-border bg-background p-5 hover:border-primary hover:shadow-sm transition"
+                            >
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        <span
+                                            className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${
+                                                api.method === "GET"
+                                                    ? "bg-green-500/10 text-green-600"
+                                                    : api.method === "POST"
+                                                      ? "bg-blue-500/10 text-blue-600"
+                                                      : api.method === "PUT"
+                                                        ? "bg-yellow-500/10 text-yellow-600"
+                                                        : api.method === "PATCH"
+                                                          ? "bg-purple-500/10 text-purple-600"
+                                                          : "bg-red-500/10 text-red-600"
+                                            }`}
+                                        >
+                                            {api.method}
+                                        </span>
+
+                                        <h3 className="text-lg font-semibold truncate">{api.title}</h3>
+                                    </div>
+
+                                    <p className="mt-3 text-sm text-muted-foreground line-clamp-2">
+                                        {api.description || "No description available."}
+                                    </p>
+
+                                    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                                        <span>
+                                            Visibility: <span className="capitalize font-medium">{api.visibility}</span>
+                                        </span>
+
+                                        <span>
+                                            Status: <span className="capitalize font-medium">{api.status}</span>
+                                        </span>
+
+                                        <span>Created {new Date(api.createdAt).toLocaleDateString()}</span>
+                                    </div>
+
+                                    {api.url && (
+                                        <div className="mt-4 rounded-lg bg-muted px-3 py-2 overflow-hidden">
+                                            <p
+                                                className="truncate text-xs font-mono text-muted-foreground"
+                                                title={api.url}
+                                            >
+                                                {api.url}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </div>
-
-            {/* TODO:
-                Replace with your EditProfileModal
-            */}
 
             {editing && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
