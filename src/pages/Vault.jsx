@@ -2,16 +2,27 @@ import React, { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import VaultApiCard from "../components/card/VaultApiCard.jsx";
+import FilterBar from "../components/ui/FilterBar.jsx";
 import { useApis } from "../features/api/useApi.js";
 
 const Vault = () => {
     const { currentUserApisData } = useApis();
 
     const [search, setSearch] = useState("");
+    const [method, setMethod] = useState("");
+    const [status, setStatus] = useState("");
 
     const apiDisplay = useMemo(() => {
-        return currentUserApisData.filter((api) => api.title.toLowerCase().includes(search.toLowerCase()));
-    }, [search, currentUserApisData]);
+        return currentUserApisData.filter((api) => {
+            const matchesSearch = api.title.toLowerCase().includes(search.toLowerCase());
+            const matchesMethod = !method || api.method === method;
+            const matchesStatus = !status || api.status === status;
+
+            return matchesSearch && matchesMethod && matchesStatus;
+        });
+    }, [search, method, status, currentUserApisData]);
+
+    const hasActiveFilters = search || method || status;
 
     return (
         <section className="flex flex-col gap-12 py-10">
@@ -33,8 +44,17 @@ const Vault = () => {
                     Create API
                 </Link>
             </section>
-            {/* SearchBar */}
-            <h2>Search bar comes here leaving space</h2>
+
+            {/* Filter Bar */}
+            <FilterBar
+                search={search}
+                onSearchChange={setSearch}
+                method={method}
+                onMethodChange={setMethod}
+                status={status}
+                onStatusChange={setStatus}
+                resultCount={apiDisplay.length}
+            />
 
             {/* Show APIs */}
             {apiDisplay.length > 0 ? (
@@ -45,15 +65,15 @@ const Vault = () => {
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
-                    <h3 className="text-xl font-semibold">{search ? "No APIs found" : "No APIs yet"}</h3>
+                    <h3 className="text-xl font-semibold">{hasActiveFilters ? "No APIs found" : "No APIs yet"}</h3>
 
                     <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                        {search
-                            ? `No APIs match "${search}". Try a different search term.`
+                        {hasActiveFilters
+                            ? "No APIs match your filters. Try adjusting your search or clearing filters."
                             : "Create your first API to start building your personal vault."}
                     </p>
 
-                    {!search && (
+                    {!hasActiveFilters && (
                         <Link
                             to="/createApi"
                             className="mt-6 flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground transition hover:opacity-90"
