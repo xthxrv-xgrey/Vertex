@@ -54,7 +54,7 @@ export const useAuth = () => {
             username,
             password,
 
-            avatar: "https://lh3.googleusercontent.com/a/ACg8ocL7nHnAVztJQTz-qPPxg8ohI-fSniwN9Zub186GI7EC2sY49xA=s360-c-no",
+            avatar: "https://i.pinimg.com/736x/0d/f0/13/0df013f87b3e7ca69176e7f696d72ae7.jpg",
 
             bio: "",
 

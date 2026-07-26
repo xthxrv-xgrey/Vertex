@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router";
-import { Menu, X, LayoutDashboard, Boxes, Globe2, Bookmark, User, Settings, LogOut } from "lucide-react";
+import { Menu, X, LayoutDashboard, Boxes, Globe2, Bookmark, User, LogOut } from "lucide-react";
 import { useAuth } from "../../features/auth/useAuth";
 import { useUser } from "../../features/auth/useUser";
 
@@ -84,15 +84,6 @@ const Header = () => {
                                 >
                                     <User size={18} />
                                     Profile
-                                </NavLink>
-
-                                <NavLink
-                                    to="/settings"
-                                    onClick={() => setProfileMenu(false)}
-                                    className="flex items-center gap-3 px-4 py-3 hover:bg-muted transition"
-                                >
-                                    <Settings size={18} />
-                                    Settings
                                 </NavLink>
 
                                 <button
@@ -187,15 +178,6 @@ const Header = () => {
                     >
                         <User size={18} />
                         Profile
-                    </NavLink>
-
-                    <NavLink
-                        to="/settings"
-                        onClick={closeMenu}
-                        className="flex items-center gap-3 rounded-lg px-3 py-3 transition hover:bg-muted"
-                    >
-                        <Settings size={18} />
-                        Settings
                     </NavLink>
 
                     <button

@@ -21,9 +21,15 @@ const authSlice = createSlice({
             state.users[user.email] = user;
             state.usernames[user.username] = user.email;
         },
+
+        updateUser: (state, action) => {
+            const user = action.payload;
+            state.users[user.email] = user;
+            state.usernames[user.username] = user.email;
+        },
     },
 });
 
-export const { login, logout, register } = authSlice.actions;
+export const { login, logout, register, updateUser } = authSlice.actions;
 
 export default authSlice.reducer;
