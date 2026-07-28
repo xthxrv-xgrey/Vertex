@@ -7,6 +7,8 @@ const SphereApiCard = ({ apiData }) => {
     const { saveApi, currentUserSavedApis } = useApis();
     const { getUsernameByEmail } = useUser();
 
+    const username = getUsernameByEmail(apiData.owner);
+
     const methodColors = {
         get: "text-method-get",
         post: "text-method-post",
@@ -52,9 +54,9 @@ const SphereApiCard = ({ apiData }) => {
             <p className="mt-4 line-clamp-2 text-sm leading-6 text-muted-foreground">{apiData.description}</p>
 
             <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-                <p className="text-xs text-muted-foreground">
-                    Published by <span className="text-foreground">{getUsernameByEmail(apiData.owner)}</span>
-                </p>
+                <Link className="text-xs text-muted-foreground" to={`/users/${username}`}>
+                    Published by <span className="text-foreground hover:font-semibold">{username}</span>
+                </Link>
 
                 <p className="text-xs text-muted-foreground">Public API</p>
             </div>

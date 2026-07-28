@@ -15,6 +15,8 @@ const SavedApiCard = ({ apiData }) => {
         delete: "text-method-delete",
     };
 
+    const username = getUsernameByEmail(apiData.owner);
+
     return (
         <Link
             to={`/apis/${apiData.id}`}
@@ -47,9 +49,9 @@ const SavedApiCard = ({ apiData }) => {
             <p className="mt-4 line-clamp-2 text-sm leading-6 text-muted-foreground">{apiData.description}</p>
 
             <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-                <p className="text-xs text-muted-foreground">
-                    By <span className="text-foreground">{getUsernameByEmail(apiData.owner)}</span>
-                </p>
+                <Link className="text-xs text-muted-foreground" to={`/users/${username}`}>
+                    By <span className="text-foreground hover:font-semibold">{username}</span>
+                </Link>
 
                 <p className="text-xs text-muted-foreground">Saved</p>
             </div>

@@ -13,6 +13,8 @@ const RecentActivityCard = ({ apiData }) => {
 
     const { getUsernameByEmail } = useUser();
 
+    const username = getUsernameByEmail(apiData.owner);
+
     return (
         <Link
             to={`/apis/${apiData.id}`}
@@ -29,7 +31,9 @@ const RecentActivityCard = ({ apiData }) => {
 
                 <p className="truncate font-mono text-xs text-muted-foreground">{apiData.baseUrl + apiData.url}</p>
             </div>
-            <p className="text-xs text-muted-foreground">By {getUsernameByEmail(apiData.owner)}</p>
+            <Link className="text-xs text-muted-foreground hover:font-semibold" to={`/users/${username}`}>
+                By {username}
+            </Link>
         </Link>
     );
 };
